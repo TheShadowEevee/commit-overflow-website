@@ -1,22 +1,100 @@
+---
+import { SEO } from "astro-seo";
+import { Head } from "astro-capo";
+import { Font } from "astro:assets";
+
+interface Props {
+    title?: string;
+    description?: string;
+}
+
+const {
+    title = "Commit Overflow | Purdue Hackers",
+    description = "Track your winter break commits! Purdue Hackers' annual challenge to make progress on projects every day from Dec 22, 2025 to Jan 12, 2026.",
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, import.meta.env.SITE).toString();
+const ogImageUrl = new URL("/og-image.png", import.meta.env.SITE).toString();
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+    <Head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <style>
+            .skip-link {
+                position: absolute;
+                top: -40px;
+                left: 0;
+                background: var(--fg);
+                color: var(--bg);
+                padding: 8px 16px;
+                z-index: 10000;
+                text-decoration: none;
+                font-family: var(--font);
+            }
+            .skip-link:focus {
+                top: 0;
+            }
+        </style>
+
+        <SEO
+            title={title}
+            description={description}
+            canonical={canonicalUrl}
+            openGraph={{
+                basic: {
+                    title: title,
+                    type: "website",
+                    image: ogImageUrl,
+                    url: canonicalUrl,
+                },
+                optional: {
+                    siteName: "Commit Overflow",
+                    description: description,
+                    locale: "en_US",
+                },
+                image: {
+                    alt: "Commit Overflow - Purdue Hackers Winter Break Challenge",
+                },
+            }}
+            twitter={{
+                card: "summary_large_image",
+                site: "@PurdueHackers",
+                title: title,
+                description: description,
+                image: ogImageUrl,
+            }}
+            extend={{
+                meta: [
+                    { name: "keywords", content: "Purdue Hackers, Commit Overflow, coding challenge, winter break, daily commits, programming, open source, hackathon" },
+                    { name: "author", content: "Purdue Hackers" },
+                    { name: "generator", content: Astro.generator },
+                    { name: "theme-color", content: "#000000" },
+                    { name: "robots", content: "index, follow" },
+                ],
+            }}
+        />
+
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="manifest" href="/manifest.json" />
+        <!-- TODO: Add apple-touch-icon.png (180x180) to public/ for iOS home screen -->
+        <link rel="apple-touch-icon" href="/favicon.svg" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <Font cssVariable="--font-jetbrains-mono" preload />
+    </Head>
+    <body>
+        <a href="#main-content" class="skip-link">Skip to main content</a>
+        <main id="main-content">
+            <slot />
+        </main>
+    </body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<style is:global>
+    @import "../styles/global.css";
 </style>

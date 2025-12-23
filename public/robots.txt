@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://commits.purduehackers.com/sitemap-index.xml

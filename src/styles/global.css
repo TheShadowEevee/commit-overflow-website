@@ -1,0 +1,539 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --bg: #ffffff;
+    --fg: #000000;
+    --accent: #009900;
+    --muted: #666666;
+    --border: #cccccc;
+    --font: "JetBrains Mono", "Fira Code", "Consolas", "Monaco", monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    max-width: 100ch;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+pre,
+code {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Bullet lists */
+ul {
+    list-style: none;
+    padding-left: 2ch;
+}
+
+ul li::before {
+    content: "- ";
+    margin-left: -2ch;
+}
+
+ul ul li::before {
+    content: "* ";
+}
+
+ul ul ul li::before {
+    content: "> ";
+}
+
+.avatar {
+    width: 24px;
+    height: 24px;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    vertical-align: middle;
+    border-radius: 0;
+    margin-right: 8px;
+}
+
+/* Section dividers */
+.divider {
+    border: none;
+    height: 1px;
+    background: var(--border);
+    margin: 1.5rem 0;
+}
+
+.section {
+    margin: 1.5rem 0;
+}
+
+.section-title {
+    font-weight: normal;
+    margin-bottom: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.section-header {
+    margin-bottom: 1.25rem;
+}
+
+.feed-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.chart-section h2 {
+    margin-bottom: 1.25rem;
+}
+
+.section-title .meta {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+/* Live indicator */
+.live-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    margin-right: 0.5ch;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* ASCII art container */
+.ascii {
+    white-space: pre;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    overflow-x: auto;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Charts */
+.chart {
+    white-space: pre;
+    line-height: 1.3;
+    width: 100%;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.chart-section {
+    width: 100%;
+}
+
+.bar-chart {
+    user-select: none;
+    -webkit-user-select: none;
+    line-height: 1;
+    margin: 0 auto;
+    display: block;
+    width: fit-content;
+}
+
+.bar-chart .green {
+    color: var(--accent);
+}
+
+.green {
+    color: var(--accent);
+}
+
+.heatmap-container {
+    width: 100%;
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.heatmap {
+    width: 100%;
+    letter-spacing: 0.15em;
+}
+
+.heatmap-chars {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.date-label {
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+.unselectable {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.skeleton {
+    opacity: 0.5;
+}
+
+.avatar-placeholder {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    transform: scale(6);
+    transform-origin: left center;
+    background: var(--border);
+    margin-right: 20px;
+}
+
+.progress-bar {
+    width: 100%;
+}
+
+.selectable {
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+/* Stat bars */
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1ch;
+    margin: 0.25rem 0;
+}
+
+.stat-label {
+    min-width: 16ch;
+}
+
+.stat-bar {
+    flex: 1;
+    color: var(--muted);
+}
+
+.stat-value {
+    min-width: 6ch;
+    text-align: right;
+}
+
+/* Leaderboard */
+.leaderboard-section {
+    width: 100%;
+}
+
+.leaderboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.leaderboard-header h2 {
+    font-weight: normal;
+    font-size: 1rem;
+}
+
+.sort-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5ch;
+}
+
+.sort-label {
+    color: var(--muted);
+}
+
+.sort-btn {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0;
+}
+
+.sort-btn:hover {
+    color: var(--fg);
+}
+
+.sort-btn.active {
+    color: var(--accent);
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+    text-align: left;
+    padding: 0.35rem 1rem;
+}
+
+.leaderboard-table th {
+    border-bottom: 1px solid var(--border);
+    font-weight: normal;
+    color: var(--muted);
+}
+
+.leaderboard-table th.sorted {
+    color: var(--accent);
+}
+
+.leaderboard-table td:first-child,
+.leaderboard-table th:first-child {
+    padding-left: 0;
+    width: 3ch;
+}
+
+.hacker-cell {
+    display: flex;
+    align-items: center;
+    gap: 1ch;
+}
+
+.markdown-content {
+    line-height: 1.5;
+}
+
+.markdown-content p {
+    margin: 0.25rem 0;
+}
+
+.markdown-content p:first-child {
+    margin-top: 0;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.markdown-content li {
+    margin: 0.25rem 0;
+}
+
+.markdown-content a {
+    color: var(--accent);
+}
+
+.markdown-content code {
+    font-family: inherit;
+}
+
+.markdown-content pre {
+    margin: 0.5rem 0;
+    white-space: pre-wrap;
+}
+
+/* Markdown lists in feed */
+.feed-item-message ul,
+.feed-item-message ol {
+    display: block;
+    margin: 0.25rem 0;
+    padding-left: 1.5rem;
+}
+
+.feed-item-message li {
+    display: list-item;
+    margin: 0.1rem 0;
+}
+
+.feed-item-message ul li::before {
+    content: none;
+}
+
+.feed-item-message ol {
+    list-style: decimal;
+}
+
+.feed-item-message ul {
+    list-style: disc;
+}
+
+.github-commit,
+.github-pr,
+.github-issue,
+.github-repo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3ch;
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+    font-family: var(--font);
+    font-size: 0.9em;
+}
+
+.github-commit {
+    background: rgba(35, 134, 54, 0.15);
+    color: #238636;
+}
+
+.github-pr {
+    background: rgba(130, 80, 223, 0.15);
+    color: #8250df;
+}
+
+.github-issue {
+    background: rgba(35, 134, 54, 0.15);
+    color: #238636;
+}
+
+.github-repo-link {
+    background: rgba(110, 118, 129, 0.15);
+    color: #6e7681;
+}
+
+.github-icon {
+    font-size: 0.9em;
+}
+
+.github-repo {
+    font-weight: 500;
+}
+
+.github-sha {
+    opacity: 0.7;
+    font-size: 0.85em;
+}
+
+.github-sha::before {
+    content: "@";
+}
+
+.github-num {
+    opacity: 0.8;
+}
+
+/* Discord custom emojis */
+.discord-emoji {
+    height: 1.4em;
+    width: auto;
+    vertical-align: -0.3em;
+    display: inline;
+    object-fit: contain;
+}
+
+/* Discord mentions */
+.mention {
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+.mention-user,
+.mention-channel {
+    background: rgba(88, 101, 242, 0.15);
+    color: #5865f2;
+}
+
+.mention-role {
+    background: rgba(203, 166, 247, 0.15);
+    color: #cba6f7;
+}
+
+/* Feed */
+.feed-item {
+    margin: 0.75rem 0;
+    padding-left: 1ch;
+    border-left: 2px solid var(--border);
+}
+
+.feed-time {
+    color: var(--muted);
+}
+
+.feed-link {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.feed-link:hover {
+    color: var(--accent);
+}
+
+/* Box */
+.box {
+    border: 1px solid var(--fg);
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+}
+
+/* Footer */
+.footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    text-align: center;
+}
+
+.footer a {
+    margin: 0 0.5rem;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+    html {
+        font-size: 12px;
+    }
+
+    body {
+        padding: 1rem 0.5rem;
+    }
+
+    .ascii {
+        font-size: 0.5rem;
+    }
+
+    .chart {
+        overflow-x: auto;
+    }
+
+    .stat-row {
+        flex-wrap: wrap;
+    }
+
+    .stat-bar {
+        order: 3;
+        width: 100%;
+        flex: none;
+    }
+}

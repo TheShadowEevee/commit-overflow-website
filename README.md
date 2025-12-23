@@ -1,46 +1,94 @@
-# Astro Starter Kit: Basics
+# Commit Overflow
 
-```sh
-bun create astro@latest -- --template basics
+> **21 Days of Code.** Purdue Hackers' annual winter break coding challenge.
+
+![Commit Overflow Screenshot](TODO: Add screenshot)
+
+This repository contains the source code for the Commit Overflow 2025-2026 website. It tracks participants' daily git commits, visualizing their progress and maintaining a live leaderboard during the event (Dec 22, 2025 - Jan 12, 2026).
+
+## Tech Stack
+
+Built with the [T3 Stack](https://create.t3.gg/) philosophy in mind, but adapted for the edge.
+
+- **Framework:** [Astro 5](https://astro.build/) (SSR)
+- **UI:** React 19, Tailwind CSS
+- **Database:** Cloudflare D1
+- **Cache/KV:** Upstash Redis
+- **Integrations:** Discord API
+- **Deployment:** Vercel
+
+## Local Development
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18+) or [Bun](https://bun.sh/) (recommended)
+- Git
+
+### Environment Variables
+
+Create a `.env` file in the root directory with the following keys (see `env.ts` for schema):
+
+```bash
+# Cloudflare D1 (Database)
+D1_ACCOUNT_ID=
+D1_DATABASE_ID=
+D1_API_TOKEN=
+
+# Discord API (Auth & Bot)
+DISCORD_CLIENT_ID=
+DISCORD_BOT_TOKEN=
+
+# Upstash Redis (KV Store)
+KV_REST_API_URL=
+KV_REST_API_TOKEN=
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### Running Locally
 
-## 🚀 Project Structure
+```bash
+# Install dependencies
+bun install
 
-Inside of your Astro project, you'll see the following folders and files:
+# Start development server
+bun dev
+```
+
+The site will be available at `http://localhost:4321`.
+
+### Commands
+
+| Command | Description |
+| :--- | :--- |
+| `bun dev` | Start local dev server |
+| `bun build` | Type-check and build for production |
+| `bun preview` | Preview the production build locally |
+| `bun lint` | Run Oxlint for code analysis |
+| `bun format` | Format code with Oxfmt |
+
+## Project Structure
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+src/
+├── components/   # UI components (React & Astro)
+│   ├── CommitChart.tsx   # Activity visualization
+│   ├── Leaderboard.tsx   # Ranking system
+│   └── ...
+├── lib/          # Backend logic & utilities
+│   ├── d1.ts     # Database interactions
+│   ├── redis.ts  # Caching layer
+│   └── ...
+├── pages/        # File-based routing
+│   ├── api/      # Server-side API endpoints
+│   └── index.astro
+└── styles/       # Global Tailwind styles
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Deployment
 
-## 🧞 Commands
+This project is configured for deployment on **Vercel** with the Astro Vercel Adapter.
+Pushes to `main` should trigger a production build.
 
-All commands are run from the root of the project, from a terminal:
+## Links
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- [Purdue Hackers](https://purduehackers.com)
+- [Astro Documentation](https://docs.astro.build)
