@@ -7,10 +7,12 @@ import gabAstroCompress from "gab-astro-compress";
 import { schema } from "./env";
 
 export default defineConfig({
-    site: "https://commits.purduehackers.com",
+    site: "https://commit.purduehackers.com",
     trailingSlash: "never",
     output: "server",
-    adapter: vercel(),
+  adapter: vercel({
+    isr: true,
+    }),
     integrations: [react(), tailwind(), sitemap(), gabAstroCompress()],
     prefetch: {
         prefetchAll: true,
