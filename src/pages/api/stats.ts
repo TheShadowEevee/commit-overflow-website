@@ -342,7 +342,9 @@ async function computeStats(): Promise<StatsResponse> {
         getCommitOverflowStats(),
     ]);
 
-    const publicUserIds = new Set(allProfiles.filter((p) => p.is_private === 0).map((p) => p.user_id));
+    const publicUserIds = new Set(
+        allProfiles.filter((p) => p.is_private === 0).map((p) => p.user_id),
+    );
     const leaderboardCommits = allCommits.filter((c) => publicUserIds.has(c.user_id));
     const feedCommits = allCommits.filter((c) => c.is_private === 0);
 
