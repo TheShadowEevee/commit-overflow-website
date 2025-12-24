@@ -112,43 +112,63 @@ async function restoreDiscordSyntax(html: string): Promise<string> {
     return result;
 }
 
-function parseGitHubLinks(html: string): string {
+function parseGitLinks(html: string): string {
     let parsed = html;
 
     parsed = parsed.replace(
-        /https?:\/\/github\.com\/([^/\s]+)\/([^/\s]+)\/commit\/([a-f0-9]+)/gi,
-        (_, user, repo, sha) => {
+        /https?:\/\/([^\/\s]+)\/([^/\s]+)\/([^/\s]+)\/commit\/([a-f0-9]+)/gi,
+        (_, domain, user, repo, sha) => {
+            const safeDomain = escapeHtml(domain);
             const safeUser = escapeHtml(user);
             const safeRepo = escapeHtml(repo);
-            const safeSha = escapeHtml(sha);
-            return `<a href="https://github.com/${safeUser}/${safeRepo}/commit/${safeSha}" target="_blank" rel="noopener noreferrer" class="github-commit"><span class="github-repo">${safeUser}/${safeRepo}</span><span class="github-sha">${safeSha}</span></a>`;
+            const safeSha = escapeHtml(sha).substring(0, 8);
+            if (domain === "github.com") {
+                return `<a href="https://${safeDomain}/${safeUser}/${safeRepo}/commit/${safeSha}" target="_blank" rel="noopener noreferrer" class="github-commit"><span class="github-repo">${safeUser}/${safeRepo}</span><span class="github-sha">${safeSha}</span></a>`;
+            } else {
+                return `<a href="https://${safeDomain}/${safeUser}/${safeRepo}/commit/${safeSha}" target="_blank" rel="noopener noreferrer" class="github-commit"><span class="github-repo">${safeDomain}:${safeUser}/${safeRepo}</span><span class="github-sha">${safeSha}</span></a>`;
+            }
         },
     );
 
     parsed = parsed.replace(
-        /https?:\/\/github\.com\/([^/\s]+)\/([^/\s]+)\/pull\/(\d+)/gi,
-        (_, user, repo, num) => {
+        /https?:\/\/([^\/\s]+)\/([^/\s]+)\/([^/\s]+)\/pull\/(\d+)/gi,
+        (_, domain, user, repo, num) => {
+            const safeDomain = escapeHtml(domain);
             const safeUser = escapeHtml(user);
             const safeRepo = escapeHtml(repo);
-            return `<a href="https://github.com/${safeUser}/${safeRepo}/pull/${num}" target="_blank" rel="noopener noreferrer" class="github-commit"><span class="github-repo">${safeUser}/${safeRepo}</span><span class="github-num">#${num}</span></a>`;
+            if (domain === "github.com") {
+                return `<a href="https://${safeDomain}/${safeUser}/${safeRepo}/pull/${num}" target="_blank" rel="noopener noreferrer" class="github-commit"><span class="github-repo">${safeUser}/${safeRepo}</span><span class="github-num">#${num}</span></a>`;
+            } else {
+                return `<a href="https://${safeDomain}/${safeUser}/${safeRepo}/pull/${num}" target="_blank" rel="noopener noreferrer" class="github-commit"><span class="github-repo">${safeDomain}:${safeUser}/${safeRepo}</span><span class="github-num">#${num}</span></a>`;
+            }
         },
     );
 
     parsed = parsed.replace(
-        /https?:\/\/github\.com\/([^/\s]+)\/([^/\s]+)\/issues\/(\d+)/gi,
-        (_, user, repo, num) => {
+        /https?:\/\/([^\/\s]+)\/([^/\s]+)\/([^/\s]+)\/issues\/(\d+)/gi,
+        (_, domain, user, repo, num) => {
+            const safeDomain = escapeHtml(domain);
             const safeUser = escapeHtml(user);
             const safeRepo = escapeHtml(repo);
-            return `<a href="https://github.com/${safeUser}/${safeRepo}/issues/${num}" target="_blank" rel="noopener noreferrer" class="github-commit"><span class="github-repo">${safeUser}/${safeRepo}</span><span class="github-num">#${num}</span></a>`;
+            if (domain === "github.com") {
+                return `<a href="https://${safeDomain}/${safeUser}/${safeRepo}/issues/${num}" target="_blank" rel="noopener noreferrer" class="github-commit"><span class="github-repo">${safeUser}/${safeRepo}</span><span class="github-num">#${num}</span></a>`;
+            } else {
+                return `<a href="https://${safeDomain}/${safeUser}/${safeRepo}/issues/${num}" target="_blank" rel="noopener noreferrer" class="github-commit"><span class="github-repo">${safeDomain}:${safeUser}/${safeRepo}</span><span class="github-num">#${num}</span></a>`;
+            }
         },
     );
 
     parsed = parsed.replace(
-        /https?:\/\/github\.com\/([^/\s]+)\/([^/\s]+)(?=[\s)\],.!?]|$)/gi,
-        (_, user, repo) => {
+        /https?:\/\/([^\/\s]+)\/([^/\s]+)\/([^/\s]+)(?=[\s)\],.!?]|$)/gi,
+        (_, domain, user, repo) => {
+            const safeDomain = escapeHtml(domain);
             const safeUser = escapeHtml(user);
             const safeRepo = escapeHtml(repo);
-            return `<a href="https://github.com/${safeUser}/${safeRepo}" target="_blank" rel="noopener noreferrer" class="github-commit"><span class="github-repo">${safeUser}/${safeRepo}</span></a>`;
+            if (domain === "github.com") {
+                return `<a href="https://${safeDomain}/${safeUser}/${safeRepo}" target="_blank" rel="noopener noreferrer" class="github-commit"><span class="github-repo">${safeUser}/${safeRepo}</span></a>`;
+            } else {
+                return `<a href="https://${safeDomain}/${safeUser}/${safeRepo}" target="_blank" rel="noopener noreferrer" class="github-commit"><span class="github-repo">${safeDomain}:${safeUser}/${safeRepo}</span></a>`;
+            }
         },
     );
 
@@ -433,7 +453,7 @@ async function computeStats(): Promise<StatsResponse> {
             const truncatedText = smartTruncate(escaped, 50);
             const sanitizedHtml = await markdownToHtml(truncatedText);
             const withDiscord = await restoreDiscordSyntax(sanitizedHtml);
-            const messageHtml = parseGitHubLinks(withDiscord);
+            const messageHtml = parseGitLinks(withDiscord);
             const attachments =
                 message?.attachments?.map((a) => ({
                     url: a.url,
