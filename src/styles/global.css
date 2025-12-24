@@ -9,26 +9,31 @@
     --muted: #666666;
     --border: #cccccc;
     --font: "JetBrains Mono", "Fira Code", "Consolas", "Monaco", monospace;
+
+    /* Dark theme values */
+    --dark-bg: #0d0d0d;
+    --dark-fg: #e0e0e0;
+    --dark-accent: #00cc00;
+    --dark-muted: #888888;
+    --dark-border: #333333;
 }
 
-/* System preference (default) */
 @media (prefers-color-scheme: dark) {
     :root:not(.light):not(.dark) {
-        --bg: #0d0d0d;
-        --fg: #e0e0e0;
-        --accent: #00cc00;
-        --muted: #888888;
-        --border: #333333;
+        --bg: var(--dark-bg);
+        --fg: var(--dark-fg);
+        --accent: var(--dark-accent);
+        --muted: var(--dark-muted);
+        --border: var(--dark-border);
     }
 }
 
-/* Explicit dark mode */
 :root.dark {
-    --bg: #0d0d0d;
-    --fg: #e0e0e0;
-    --accent: #00cc00;
-    --muted: #888888;
-    --border: #333333;
+    --bg: var(--dark-bg);
+    --fg: var(--dark-fg);
+    --accent: var(--dark-accent);
+    --muted: var(--dark-muted);
+    --border: var(--dark-border);
 }
 
 /* Theme picker styles */
@@ -55,6 +60,11 @@
 
 .theme-btn:hover {
     color: var(--fg);
+}
+
+.theme-btn:focus-visible {
+    outline: 1px solid var(--accent);
+    outline-offset: 2px;
 }
 
 .theme-btn.active {

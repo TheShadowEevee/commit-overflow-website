@@ -81,7 +81,7 @@ const ogImageUrl = new URL("/og-image.png", import.meta.env.SITE).toString();
         <meta name="darkreader-lock" />
         <script is:inline>
             (function() {
-                const theme = localStorage.getItem('theme');
+                var theme = localStorage.getItem('theme');
                 if (theme === 'light' || theme === 'dark') {
                     document.documentElement.classList.add(theme);
                 }
